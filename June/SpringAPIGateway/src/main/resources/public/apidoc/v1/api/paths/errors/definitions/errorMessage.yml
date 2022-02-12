@@ -1,0 +1,21 @@
+type: object
+required:
+- Code
+- Instance
+- Message
+- MoreInfo
+- Status
+- Timestamp
+properties:
+  Code:
+    type: string
+  Instance:
+    type: string
+  Message:
+    type: string
+  MoreInfo:
+    type: string
+  Status:
+    type: string
+  Timestamp:
+    type: string

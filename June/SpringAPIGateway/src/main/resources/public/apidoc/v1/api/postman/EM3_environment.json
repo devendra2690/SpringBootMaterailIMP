@@ -1,0 +1,28 @@
+{
+  "id": "98f88939-c12f-6460-411a-4e5150583b99",
+  "name": "EM3_Oauthmgr",
+  "values": [
+    {
+      "enabled": true,
+      "key": "protocol",
+      "value": "http",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "hostname",
+      "value": "localhost:9601",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "authorization",
+      "value": "Basic  dXNlcjphYmNk",
+      "type": "text"
+    }
+  ],
+  "timestamp": 1516814379919,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2018-01-24T17:35:05.393Z",
+  "_postman_exported_using": "Postman/5.4.0"
+}

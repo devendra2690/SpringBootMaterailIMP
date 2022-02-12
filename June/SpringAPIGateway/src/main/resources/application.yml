@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: spring-api-gateway
+  cloud:
+    gateway:
+      default-filters:
+      - name: SCGWGlobalFilter
+      routes:
+      - id: spring-org-mgr
+        uri: lb://SPRING-ORG-MGR
+        predicates:
+        - Path=/OrgMgr/**
+      - id: spring-result-mgr
+        uri: lb://SPRING-RESULT-MGR
+        predicates:
+        - Path=/ResultMgr/**
+      - id: spring-student-mgr
+        uri: lb://SPRING-STUDENT-MGR
+        predicates:
+        - Path=/StudentMgr/**
+      - id: spring-comm-mgr
+        uri: lb://SPRING-COMM-MGR
+        predicates:
+        - Path=/CommMgr/**
+    discovery:
+      enabled: true
+      reactive:
+        enabled: false
+      blocking:
+        enabled: true
+server:
+  port: 9890
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

@@ -1,0 +1,83 @@
+swagger: '2.0'
+info:
+  description: >
+    The Devendra Brains REST API provides a powerful and easy way to integrate
+    Devendra Brains functionality into your own applications.You can browse through
+    the supported operations in the Resources and Operations section below. You
+    can even invoke the operations directly from this page using the
+    corresponding "Try this" operation functionality!
+
+
+    Before using the Devendra Brains API, you will need to contact your Devendra Brains
+    Account Representative. If you are new to Devendra Brains, please complete the
+    following form to get the contract process started:
+
+    ## Getting started: 
+
+
+    1. Obtain a unique set of credentials (a client_id, a client_secret) for use in your application by contacting  your Devendra Brains Account Manager. The client_id and the client_secret are required in order to generate an Access  Token. The RevSpring Account Manager will also be providing the clientId and clientType as these values are  required in all API calls other than the Auth operations.  
+
+
+    2. All of the API calls require an Auth Access Token. Use the credentials provided in step 1 to generate an Auth 
+    Access Token using the following method: /api/rest/auth/oauth/token.   
+
+
+    3. Use the access_token returned to call any of the available REST API Operations. When calling other operations,  you will need to use the clientId and clientIdType in the Header along with the access_token.  
+
+
+    4. The Try this operation button is available within each operation for testing.
+
+
+     ## Using the "Try this" operation functionality:
+
+    To use the "Try this" operation functionality applicable to each operation,  first provide valid values for each parameter under the "Parameter" column. To easily populate complex parameter
+    values, select Model Schema under the "Data Type" column and then click on the JSON text that is revealed. You can then edit the populated "Value" field as needed, and click the corresponding "Try this" operation button to
+    watch the API operation in action.
+
+    
+     ## Try Postman :
+
+    Open the links and save to download the files.
+
+    <a href = "/apidoc/v1/api/postman/EM3_collection.json"><strong>Postman Collection</strong></a> 
+    <a href = "/apidoc/v1/api/postman/EM3_environment.json"><strong>Postman Variables</strong></a> 
+    <br>
+    
+     ## Error Codes :
+    
+    Error codes which may appear when working with the API. 
+    <a href = "/apidoc/v1/api/errorcodes/codes.html"><strong>Error Codes</strong></a> 
+    <br>
+    <br>
+    © 2019 Devendra Brains. All Rights Reserved. 
+
+    ## Resources and Operations
+  version: 1.0.0
+  title: Introduction
+  contact:
+    name: Devendra Brains
+  
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    description: Bearer/JWT authorization based. Enter the JWT token prepended with keyword JWT.
+    name: Authorization
+    in: header 
+  Basic:
+    type: basic
+    description: Basic authorization based. Enter valid username and password.
+    name: Authorization
+    in: header          
+security:
+  - Bearer: []
+  - Basic: []
+       
+tags:
+- name: StudentMgr
+  description: Operations in StudentMgr
+  
+paths:
+  /StudentMgr/studentOps/fetchAll:
+    $ref: ./paths/stdmgr/studentRetriveAll.yml
+  
+ 

@@ -1,0 +1,18 @@
+type: object
+required:
+- Timestamp
+- Status
+- Error
+- Message
+- Path
+properties:
+  Timestamp:
+    type: string
+  Status:
+    type: string
+  Error:
+    type: string
+  Message:
+    type: string
+  Path:
+    type: string

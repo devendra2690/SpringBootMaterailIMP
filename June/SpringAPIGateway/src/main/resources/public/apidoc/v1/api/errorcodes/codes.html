@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        .datagrid table {
+            border-collapse: collapse;
+            text-align: left;
+            width: 100%;
+        }
+        
+        .datagrid {
+            font: Verdana, Geneva, sans-serif;
+            background: #fff;
+            overflow: hidden;
+            border: 1px solid #8C8C8C;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+        
+        .datagrid table td,
+        .datagrid table th {
+            padding: 3px 10px;
+        }
+        
+        .datagrid table thead th {
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #8C8C8C), color-stop(1, #7D7D7D));
+            background: -moz-linear-gradient( center top, #8C8C8C 5%, #7D7D7D 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#8C8C8C', endColorstr='#7D7D7D');
+            background-color: #8C8C8C;
+            color: #FFFFFF;
+            font-size: 15px;
+            font-weight: bold;
+            border-left: 1px solid #A3A3A3;
+        }
+        
+        .datagrid table thead th:first-child {
+            border: none;
+        }
+        
+        .datagrid table tbody td {
+            color: #7D7D7D;
+            border-left: 1px solid #DBDBDB;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .datagrid table tbody .alt td {
+            background: #EBEBEB;
+            color: #7D7D7D;
+        }
+        
+        .datagrid table tbody td:first-child {
+            border-left: none;
+        }
+        
+        .datagrid table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .datagrid table tfoot td div {
+            border-top: 1px solid #8C8C8C;
+            background: #EBEBEB;
+        }
+        
+        .datagrid table tfoot td {
+            padding: 0;
+            font-size: 12px
+        }
+        
+        .datagrid table tfoot td div {
+            padding: 2px;
+        }
+        
+        .datagrid table tfoot td ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-align: right;
+        }
+        
+        .datagrid table tfoot li {
+            display: inline;
+        }
+        
+        .datagrid table tfoot li a {
+            text-decoration: none;
+            display: inline-block;
+            padding: 2px 8px;
+            margin: 1px;
+            color: #F5F5F5;
+            border: 1px solid #8C8C8C;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #8C8C8C), color-stop(1, #7D7D7D));
+            background: -moz-linear-gradient( center top, #8C8C8C 5%, #7D7D7D 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#8C8C8C', endColorstr='#7D7D7D');
+            background-color: #8C8C8C;
+        }
+        
+        .datagrid table tfoot ul.active,
+        .datagrid table tfoot ul a:hover {
+            text-decoration: none;
+            border-color: #7D7D7D;
+            color: #F5F5F5;
+            background: none;
+            background-color: #8C8C8C;
+        }
+        
+        div.dhtmlx_window_active,
+        div.dhx_modal_cover_dv {
+            position: fixed !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="background-color:#DCDCDC ;padding: 14px">
+        <div style="line-height:1;max-width: 960px; margin-left: auto; margin-right: auto;font-family: Droid Sans, sans-serif ">
+            <div style="padding-bottom:10px; font-weigth:bold;font-size:20px" align="center">
+                <table>
+                    <tr>
+                        <td>
+                            <img src=../../images/logo.png>
+                        </td>
+                        <td>
+                            <p>Accelerate REST API
+                                <br> Documentation for <a href="/api/rest/apidoc/v1/index.html">Version 1</a> , <a href="/api/rest/apidoc/v2/index.html">Version 2</a> is available.</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <h1 align="center">Error Codes and Responses</h1>
+    <br/>
+    <br/>
+    <h3>HTTP Status Codes</h3>
+    <p>The Revspring API attempts to return appropriate <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes"><span>HTTP status code</span></a> for every request</p>
+
+    <div class="datagrid">
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Text</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>200</td>
+                    <td>OK</td>
+                    <td>Request is Successful</td>
+                </tr>
+                <tr class="alt">
+                    <td>400</td>
+                    <td>Bad Request</td>
+                    <td>The request was invalid. An accompanying error message will explain further</td>
+                </tr>
+                <tr>
+                    <td>401</td>
+                    <td>Unauthorized</td>
+                    <td>Missing or incorrect authentication credentials.</td>
+                </tr>
+                <tr class="alt">
+                    <td>403</td>
+                    <td>Forbidden</td>
+                    <td>The request is understood, but it has been refused or access is not allowed with given credentials</td>
+                </tr>
+                <tr>
+                    <td>404</td>
+                    <td>Not Found</td>
+                    <td>The URI requested is invalid or the resource requested or document does not exists</td>
+                </tr>
+                <tr class="alt">
+                    <td>406</td>
+                    <td>Not Acceptable</td>
+                    <td>Returned when an invalid format is specified in the request.</td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>Internal Internal Server Error</td>
+                    <td>Something is broken. Please contact RevspringInc Customer care</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br/>
+    <br/>
+    <h3>Sample Error Response</h3>
+    <p>The error response is in JSON format. For instance, error might look like this : </p>
+    <p> {
+        <br> "code": "1006",
+        <br> "message": "Required Fields are missing",
+        <br> "status": "400",
+        <br> "timestamp": "Wed Jul 05 11:06:14 CDT 2017",
+        <br> "errors": [{
+        <br> &emsp;&emsp; "code" : "ERR003"
+        <br> &emsp; &emsp;"message" : "accountNumber or parentNumber required"
+        <br> &emsp; &emsp; &emsp; }]
+        <br> }
+        <br>
+    </p>
+    <br/>
+    <br/>
+
+    <h3> Error Codes</h3>
+    <p>The following table describes the high level error codes which may appear when working with the API</p>
+
+    <div class="datagrid">
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>HTTP Status Code</th>
+                    <th>Text</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Data Validation Error</td>
+                    <td>Invalid Format </tr>
+                <tr class="alt">
+                    <td>1002</td>
+                    <td>403</td>
+                    <td>Authorization Error</td>
+                    <td>Client is not authorized to perform this transaction</td>
+                </tr>
+                <tr>
+                    <td>1003</td>
+                    <td>500</td>
+                    <td>System Error</td>
+                    <td>Web service is down or broken</td>
+                </tr>
+                <tr class="alt">
+                    <td>1004</td>
+                    <td>500</td>
+                    <td>Configuration Error</td>
+                    <td>Client Configuration error. Please contact Client configuration team </td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Required Fields are missing</td>
+                    <td>Required fields are missing to perform this API call</td>
+                </tr>
+                <tr  class="alt">
+                    <td>1007</td>
+                    <td>404</td>
+                    <td>Not Found</td>
+                    <td>data not found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br/>
+    <br/>
+    <h3>Sub Error Codes</h3>
+    <p>The following table describes the detailed error codes which may appear when working with the API</p>
+
+    <div class="datagrid">
+        <table>
+            <thead>
+                <tr>
+                    <th>Error Code</th>
+                    <th>HTTP Status Code</th>
+                    <th>Category</th>
+                    <th>Sub Error Code</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR001</td>
+                    <td>Atleast one of Search param is required</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR002</td>
+                    <td>Client not found </td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR003</td>
+                    <td>AccountNumber or parentNumber required</td>
+                </tr>
+                <tr class="alt">
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR004</td>
+                    <td>StartDateTime must be in yyyy-MM-dd'T'HH:mm:ss format</td>
+                </tr>
+                <tr>
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR005</td>
+                    <td>EndDateTime must be in yyyy-MM-dd'T'HH:mm:ss format</td>
+                </tr>
+                <tr class="alt">
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR008</td>
+                    <td>Time Zone is not supported by the system. Supported TimeZones are EST, CST, PST, MST, UTC</td>
+                </tr>
+                <tr>
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR009</td>
+                    <td>StartDateTime is required and must be in YYYY-MM-DD HH:mm:ss format</td>
+                </tr>
+                <tr class="alt">
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR010</td>
+                    <td>StartDateTime must be in YYYY-MM-DD HH:mm:ss format</td>
+                </tr>
+                <tr>
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR011</td>
+                    <td>EndDateTime must be in YYYY-MM-DD HH:mm:ss format</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR012</td>
+                    <td>AccountNumber is required</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR013</td>
+                    <td>Search is required</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR014</td>
+                    <td>ClientId is required</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR015</td>
+                    <td>TreatmentId is required</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR016</td>
+                    <td>StartDateTime or endDateTime is not present</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR017</td>
+                    <td>AccountNumber or treatmentId is not present</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR018</td>
+                    <td>Mandatory fields in scoreRequestType to get paro score are parentNumber, guarantorName, guarantorCity, guarantorState, guarantorZip</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR019</td>
+                    <td>Mandatory fields in scoreRequestType to get experian score are guarantorId, guarantorFirstName, guarantorLastName, guarantorAddress, guarantorCity, guarantorState, guarantorZip</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR020</td>
+                    <td>ScoreType is required</td>
+                </tr>
+                <tr>
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR021</td>
+                    <td>Supported scoreType's are paro and experian only</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR022</td>
+                    <td>Supported fetchType's are latest and history only</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR023</td>
+                    <td>GuarantorId is not present</td>
+                </tr>
+                <tr class="alt">
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR024</td>
+                    <td>DateOfBirth should be in yyyyMMdd format</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR025</td>
+                    <td>Atleast one of query param is required</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR026</td>
+                    <td>ParentNumber is required</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR027</td>
+                    <td>Value of startDateTime and endDateTime is required or externalApptId is required</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR028</td>
+                    <td>Request is required</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR029</td>
+                    <td>ReferenceAccount is required in the request</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR030</td>
+                    <td>AccountNumber is required in the referenceAccount</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR031</td>
+                    <td>Name is required in the referenceAccount</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR032</td>
+                    <td>Card is required in the request</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR033</td>
+                    <td>CardNumber is required in the card</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR034</td>
+                    <td>CardType is required in the card</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR035</td>
+                    <td>CVVnumber is required in the card</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR036</td>
+                    <td>ExpiryMonth is required in the card</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR037</td>
+                    <td>ExpiryYear is required in the card</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR038</td>
+                    <td>Amount is required in the request</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR039</td>
+                    <td>PaymentDate is required in the request</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR040</td>
+                    <td>ScheduledDate is required in the request</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR041</td>
+                    <td>BillingInfo is required in the request</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR042</td>
+                    <td>Address1 is required in the billingInfo</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR043</td>
+                    <td>City is required in the billingInfo</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR044</td>
+                    <td>Email is required in the billingInfo</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR045</td>
+                    <td>Name is required in the billingInfo</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR046</td>
+                    <td>PhoneNumber is required in the billingInfo</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR047</td>
+                    <td>State is required in the billingInfo</td>
+                </tr>
+                <tr class="alt">
+                    <td>1006</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR048</td>
+                    <td>Zip is required in the billingInfo</td>
+                </tr>
+                <tr>
+                    <td>1001</td>
+                    <td>400</td>
+                    <td>Standard</td>
+                    <td>ERR049</td>
+                    <td>PaymentDate is in invalid format, required format is PaymentAttributes.standardDateTimeFormat.toString()),
+                        <tr class="alt">
+                            <td>1006</td>
+                            <td>400</td>
+                            <td>Standard</td>
+                            <td>ERR050</td>
+                            <td>ExternalApptId in request is required</td>
+                        </tr>
+                        <tr>
+                            <td>1001</td>
+                            <td>400</td>
+                            <td>Standard</td>
+                            <td>ERR051</td>
+                            <td>Number of days between startDateTime and endDateTime can't be greater than 14</td>
+                        </tr>
+                        <tr class="alt">
+                            <td>1001</td>
+                            <td>400</td>
+                            <td>Standard</td>
+                            <td>ERR052</td>
+                            <td>Valid apptStatus/status are Modified, Discontinued, Deleted, Completed, No-Show, Cancelled, Rescheduled, Scheduled</td>
+                        </tr>
+                        <tr>
+                            <td>1001</td>
+                            <td>400</td>
+                            <td>Standard</td>
+                            <td>ERR053</td>
+                            <td>ApptDateTime and ApptCreationDateTime format should be in AppointmentDateAttributes.standardDateTimeFormat.getValue()),
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR054</td>
+                                    <td>Status is required in request</td>
+                                </tr>
+                                <tr>
+                                    <td>1001</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR055</td>
+                                    <td>PhoneAllowed should be Y or N</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1001</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR056</td>
+                                    <td>EmailAllowed should be Y or N</td>
+                                </tr>
+                                <tr>
+                                    <td>1001</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR057</td>
+                                    <td>TextAllowed should be Y or N</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1001</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR058</td>
+                                    <td>PrefferedMode should be email, phone or text</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR059</td>
+                                    <td>RemitType is required</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1001</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR060</td>
+                                    <td>StartDate is required and should be in yyyy-MM-ddTHH:mm:ss format</td>
+                                </tr>
+                                <tr>
+                                    <td>1001</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR061</td>
+                                    <td>EndDate is required and should be in yyyy-MM-ddTHH:mm:ss format</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1001</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR062</td>
+                                    <td>Invalid remitType </td>
+                                </tr>
+                                <tr>
+                                    <td>1001</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR063</td>
+                                    <td>Number of hours between startDateTime and endDateTime should be less than 48</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR064</td>
+                                    <td>Accept request header is required if format is specified as base64</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR065</td>
+                                    <td>ExternalSmsId is required in request</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR066</td>
+                                    <td>To is required in request</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR067</td>
+                                    <td>Message is required in request</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR068</td>
+                                    <td>SmsId is required</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR069</td>
+                                    <td>Invalid smsId</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR070</td>
+                                    <td>Exception in merging message with data</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR071</td>
+                                    <td>No data found for merging</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR072</td>
+                                    <td>Balance is required in request and should be numeric</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR073</td>
+                                    <td>FirstName is required in request</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR074</td>
+                                    <td>LastName is required in request</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Standard</td>
+                                    <td>ERR100</td>
+                                    <td>Default Message</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Email</td>
+                                    <td>ERR601</td>
+                                    <td>ClientId or ClientIdType is Empty</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Email</td>
+                                    <td>ERR602</td>
+                                    <td>eMessageId is required</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Email</td>
+                                    <td>ERR603</td>
+                                    <td>Email instance record not found </td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Email</td>
+                                    <td>ERR604</td>
+                                    <td>TemplateId is required</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Email</td>
+                                    <td>ERR605</td>
+                                    <td>Please provide only one EmailId</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Email</td>
+                                    <td>ERR606</td>
+                                    <td>No data found for merging</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Email</td>
+                                    <td>ERR607</td>
+                                    <td>Email is required</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Email</td>
+                                    <td>ERR608</td>
+                                    <td>Subject is required</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Email</td>
+                                    <td>ERR609</td>
+                                    <td>MessageInHtml is required</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR701</td>
+                                    <td>ClientId or ClientIdType is Empty</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR702</td>
+                                    <td>mergeId is Required</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR703</td>
+                                    <td>Merge Request is empty</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR704</td>
+                                    <td>TemplateId is required</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR705</td>
+                                    <td>Template not found with given credentials</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR706</td>
+                                    <td>field is missing in the data section of the payload </td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR707</td>
+                                    <td>Template location not found</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR708</td>
+                                    <td>Merge record not found for given credentials</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR709</td>
+                                    <td>MergeInstance is empty</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR710</td>
+                                    <td>Message is Empty</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR711</td>
+                                    <td>Merge Request Body is Empty</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Merge</td>
+                                    <td>ERR712</td>
+                                    <td>Data is empty</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Esign</td>
+                                    <td>ERR801</td>
+                                    <td>ClientId or ClientIdType is Empty</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Esign</td>
+                                    <td>ERR802</td>
+                                    <td>esignId is Required</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Esign</td>
+                                    <td>ERR803</td>
+                                    <td> MergeId doesnot exists </td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Esign</td>
+                                    <td>ERR804</td>
+                                    <td>Esign Request Body is Empty</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Esign</td>
+                                    <td>ERR805</td>
+                                    <td>ClientId or ClientIdType or esignId is Empty</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Esign</td>
+                                    <td>ERR806</td>
+                                    <td>Esign record not found with given credentials </td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Document</td>
+                                    <td>ERR901</td>
+                                    <td>DocumentId should not have any extension</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Document</td>
+                                    <td>ERR902</td>
+                                    <td>File Already exists</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Document</td>
+                                    <td>ERR903</td>
+                                    <td>Empty file uploaded</td>
+                                </tr>
+                                <tr class="alt">
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Document</td>
+                                    <td>ERR904</td>
+                                    <td>Required fields should have a value</td>
+                                </tr>
+                                <tr>
+                                    <td>1006</td>
+                                    <td>400</td>
+                                    <td>Document</td>
+                                    <td>ERR905</td>
+                                    <td>Token not found</td>
+                                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <p>If you see an error response which is not listed in the Error codes or Sub error codes table, then fall back to the HTTP status code in order to determine the best way to address the error.</p>
+</body>
+
+</html>

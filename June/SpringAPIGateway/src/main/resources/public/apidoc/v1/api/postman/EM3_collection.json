@@ -1,0 +1,188 @@
+{
+	"id": "2f0a8c21-29f3-f706-52ae-5ff55b3f8db5",
+	"name": "EM3",
+	"description": "All EM3 endpoints are listed",
+	"order": [],
+	"folders": [
+		{
+			"name": "EM3_Oauthmgr",
+			"description": "",
+			"collectionId": "2f0a8c21-29f3-f706-52ae-5ff55b3f8db5",
+			"order": [
+				"69eb8088-fe4c-c6cc-e4ea-c10279a2c7f8",
+				"a13e8e07-96c8-3df7-89cf-5aef1a3a95dd",
+				"213b560e-8c27-377b-85eb-39df6e4204c5",
+				"e5b703c7-a78c-ba43-ed7e-cc3d5e2bde02"
+			],
+			"owner": "1695892",
+			"folders_order": [],
+			"id": "6d27a1e2-2692-3cf9-7e40-32a78a82924f"
+		}
+	],
+	"folders_order": [
+		"6d27a1e2-2692-3cf9-7e40-32a78a82924f"
+	],
+	"timestamp": 1516815144629,
+	"owner": "1695892",
+	"public": false,
+	"requests": [
+		{
+			"id": "213b560e-8c27-377b-85eb-39df6e4204c5",
+			"headers": "Authorization: {{authorization}}\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "{{authorization}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{protocol}}://{{hostname}}/v1/app?Id=1",
+			"folder": "6d27a1e2-2692-3cf9-7e40-32a78a82924f",
+			"queryParams": [
+				{
+					"key": "Id",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1516814452398,
+			"name": "App_Retrieve",
+			"description": "",
+			"collectionId": "2f0a8c21-29f3-f706-52ae-5ff55b3f8db5",
+			"responses": [],
+			"rawModeData": "{\n\"name\":\"apibroker\",\n\"description\":\"api broker desc\",\n\"createdBy\":\"anu\"\n}"
+		},
+		{
+			"id": "69eb8088-fe4c-c6cc-e4ea-c10279a2c7f8",
+			"headers": "Content-Type: application/json\nAuthorization: {{authorization}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{authorization}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{protocol}}://{{hostname}}/v1/app",
+			"folder": "6d27a1e2-2692-3cf9-7e40-32a78a82924f",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1516814394262,
+			"name": "App_Create",
+			"description": "",
+			"collectionId": "2f0a8c21-29f3-f706-52ae-5ff55b3f8db5",
+			"responses": [],
+			"rawModeData": "{\n\"Name\":\"Apibroker\",\n\"Description\":\"Apibroker application\",\n\"CreatedBy\":\"tester\"\n}"
+		},
+		{
+			"id": "a13e8e07-96c8-3df7-89cf-5aef1a3a95dd",
+			"headers": "Content-Type: application/json\nAuthorization: {{authorization}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{authorization}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{protocol}}://{{hostname}}/v1/app",
+			"folder": "6d27a1e2-2692-3cf9-7e40-32a78a82924f",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PATCH",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1516814445724,
+			"name": "App_Update",
+			"description": "",
+			"collectionId": "2f0a8c21-29f3-f706-52ae-5ff55b3f8db5",
+			"responses": [],
+			"rawModeData": "{\n\"Id\":\"1\",\n\"Name\":\"Apibroker\",\n\"Description\":\"Apibroker application\",\n\"UpdatedBy\":\"tester\"\n}"
+		},
+		{
+			"id": "e5b703c7-a78c-ba43-ed7e-cc3d5e2bde02",
+			"headers": "Content-Type: application/json\nAuthorization: {{authorization}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{authorization}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{protocol}}://{{hostname}}/v1/app?Id=1",
+			"folder": "6d27a1e2-2692-3cf9-7e40-32a78a82924f",
+			"queryParams": [
+				{
+					"key": "Id",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1516814460727,
+			"name": "App_Delete",
+			"description": "",
+			"collectionId": "2f0a8c21-29f3-f706-52ae-5ff55b3f8db5",
+			"responses": [],
+			"rawModeData": ""
+		}
+	]
+}

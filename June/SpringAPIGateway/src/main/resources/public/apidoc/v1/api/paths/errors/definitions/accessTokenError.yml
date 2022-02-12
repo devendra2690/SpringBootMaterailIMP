@@ -1,0 +1,22 @@
+required:
+- Code
+- Message
+- DeveloperMessage
+- Timestamp
+- Status
+type: object
+properties:
+  Code:
+    type: string
+    example: 1002
+  Message:
+    type: string
+    example: Authorization Error
+  DeveloperMessage:
+    type: string
+    example: UnAuthorized
+  Timestamp:
+    type: string
+  Status:
+    type: string
+    example: 401

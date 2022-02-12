@@ -1,0 +1,45 @@
+get:
+  tags:
+  - StdMgr
+  summary: STD_MGR_FETCH_ALL_STUDENT_RECORD, Retrieves all the Student records
+  description: Retrieves all Studentrecords
+  consumes:
+  - application/json
+  produces:
+  - application/json
+  responses:
+    '200':
+      schema:
+        $ref: './../stdmgr/studentRetriveAll.yml/#/definitions/studentRetrieveAllResponseInfo'
+      description: ' Request is successful '
+    '400':
+      schema:
+        $ref: ./../errors/definitions/errorMessage.yml
+      description: 'BAD_REQUEST : Invalid parameter or JSON'
+    '401':
+      schema:
+        $ref: ./../errors/definitions/accessTokenError.yml
+      description: 'UNAUTHORIZED: Invalid Access Token'
+    '500':
+      schema:
+        $ref: ./../errors/definitions/errorMessage.yml
+      description: INTERNAL_SERVER_ERROR
+definitions:
+  studentRetrieveAllResponseInfo:
+    type: array
+    items:
+      type: object
+      properties:
+        Id:
+          type: integer
+          description: Student Id
+        name:
+          type: string
+          description: Name of the Student
+        className:
+          type: String
+          description: ClassName of student
+        city:
+          type: string
+          description: City of student
+ 
