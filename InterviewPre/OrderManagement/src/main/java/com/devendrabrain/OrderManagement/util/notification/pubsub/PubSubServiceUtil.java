@@ -3,6 +3,9 @@ package com.devendrabrain.OrderManagement.util.notification.pubsub;
 import com.devendrabrain.OrderManagement.dto.NotificationDTO;
 import com.devendrabrain.OrderManagement.util.billing.BillingDTO;
 import com.devendrabrain.OrderManagement.util.customermgr.CustomerDTO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,6 +22,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class PubSubServiceUtil {
+
+    private Logger logger = LoggerFactory.getLogger(PubSubServiceUtil.class);
 
     @Autowired
     Environment environment;
@@ -44,7 +49,12 @@ public class PubSubServiceUtil {
         ResponseEntity<String> responseEntity = null;
 
         try {
-            String url = "http://localhost:8781/post/groupnotification";
+            // Add this to property file
+            // Not going through APIGateway beacuse need to add entry in GateWayConfig.java for NotificationMgr
+            // I AM LAZY :)
+            // Hostname used here should match with service name defined in docker-compose file
+            logger.info("PubSubServiceUtil:publishNotification", requestEntity);
+            String url = "http://inventoryapigateway:9890/AWSSNSMgr/post/groupnotification";
             UriComponentsBuilder builder = UriComponentsBuilder
                     .fromHttpUrl(url);
             RestTemplate restTemplate = new RestTemplate();
@@ -53,8 +63,10 @@ public class PubSubServiceUtil {
                             builder.toUriString(),
                             HttpMethod.POST, requestEntity, typeRef);
         } catch (RestClientException | IllegalStateException  e) {
+            logger.error("PubSubServiceUtil:publishNotification Error Occured", e);
+
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("PubSubServiceUtil:publishNotification Error Occured", e);
         }
 
 

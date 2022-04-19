@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class OrderDTO {
     @JsonProperty("OrderDate")
     private Date orderDate;
     @JsonProperty("OrderDetails")
-    private List<OrderDetails> orderDetails;
+    private List<OrderDetails> orderDetails = new ArrayList<>();
     @JsonProperty("TotalOrderAmount")
     private Long totalOrderAmount;
 

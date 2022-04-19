@@ -1,5 +1,7 @@
 package com.devendrabrain.OrderManagement.util.billing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -13,6 +15,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class BillingServiceUtil {
+
+    private Logger logger = LoggerFactory.getLogger(BillingServiceUtil.class);
+
 
     @Autowired
     Environment environment;
@@ -38,7 +43,14 @@ public class BillingServiceUtil {
         ResponseEntity<BillingDTO> responseEntity = null;
 
         try {
-            String url = "http://localhost:8080/BillingMgr/process";
+            
+            // Add this to property file
+            // Not going through APIGateway beacuse need to add entry in GateWayConfig.java for NotificationMgr
+            // I AM LAZY :)
+            // Hostname used here should match with service name defined in docker-compose file
+            
+            logger.info("BillingServiceUtil:processBillingRecords Sending request", requestEntity);
+            String url = "http://inventoryapigateway:9890/BillingMgr/process";
             UriComponentsBuilder builder = UriComponentsBuilder
                     .fromHttpUrl(url);
             RestTemplate restTemplate = new RestTemplate();
@@ -47,13 +59,14 @@ public class BillingServiceUtil {
                             builder.toUriString(),
                             HttpMethod.POST, requestEntity, typeRef);
         } catch (RestClientException | IllegalStateException  e) {
+            logger.error("BillingServiceUtil:processBillingRecords Error Occured", e);
            // RSLogUtil.high(e);
         } catch (Exception e) {
            // log.error("ClassName : " + this.getClass().getSimpleName()
                 //d    + " OrgMgr is down/Unknown exception while calling OrgMgr", ExceptionUtils.getStackTrace(e));
             //throw new ApiInternalErrorException(ErrorCategory.InternalServerError.getCode(),
                   //  ErrorCategory.InternalServerError.getMessage(), "OrgMgr is down/Unknown exception");
-            e.printStackTrace();
+                  logger.error("BillingServiceUtil:processBillingRecords Error Occured", e);
         }
 
         return responseEntity;

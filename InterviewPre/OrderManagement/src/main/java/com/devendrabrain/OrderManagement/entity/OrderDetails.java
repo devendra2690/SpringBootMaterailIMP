@@ -1,10 +1,8 @@
 package com.devendrabrain.OrderManagement.entity;
 
-import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Data
 @Table
 public class OrderDetails {
 
@@ -61,4 +59,5 @@ public class OrderDetails {
     public void setOrder(Order order) {
         this.order = order;
     }
+
 }

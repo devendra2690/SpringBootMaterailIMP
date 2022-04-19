@@ -17,6 +17,9 @@ import com.devendrabrain.OrderManagement.util.customermgr.CustomerServiceUtil;
 import com.devendrabrain.OrderManagement.util.inventory.InventoryDTO;
 import com.devendrabrain.OrderManagement.util.inventory.InventoryServiceUtil;
 import com.devendrabrain.OrderManagement.util.notification.pubsub.PubSubServiceUtil;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
@@ -32,6 +35,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl  implements OrderService {
+
+    private Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
     OrderDAO orderDAO;
@@ -83,15 +88,20 @@ public class OrderServiceImpl  implements OrderService {
     @Override
     public OrderBO create(OrderBO orderBO) {
 
+        logger.info("OrderServiceImpl:create Validating input object");
         // Validate inputs
 
+        logger.info("OrderServiceImpl:create Fetching order details");
+
         Order order = getOrder(orderBO);
+        logger.info("OrderServiceImpl:create Order details "+order);
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
 
-        Callable<CustomerDTO> customerDTOCallable = new Callable<CustomerDTO>() {
+        /*Callable<CustomerDTO> customerDTOCallable = new Callable<CustomerDTO>() {
             @Override
             public CustomerDTO call() throws Exception {
+                logger.info("OrderServiceImpl:create Call to fecth consume record");
                 return getCustomerRecords(order);
             }
         };
@@ -99,33 +109,57 @@ public class OrderServiceImpl  implements OrderService {
         Callable<Map<Long, String>> mapCallable = new Callable<Map<Long, String>>() {
             @Override
             public Map<Long, String> call() throws Exception {
+                logger.info(" OrderServiceImpl:create Call to fecth Inventory record");
                 return getInventoryRecords(order);
             }
         };
 
         CompletableFuture<CustomerDTO> customerDTOCompletableFuture = CompletableFuture.supplyAsync(() -> {
             CustomerDTO customerDTOResponse = getCustomerRecords(order);
+            logger.info(" OrderServiceImpl:create Consumer record "+customerDTOResponse);
             return customerDTOResponse;
         });
 
         CompletableFuture<Map<Long, String>> inventoryMapDTOCompletableFuture = CompletableFuture.supplyAsync(() -> {
             Map<Long, String> inventoryDetailsMap = getInventoryRecords(order);
+            logger.info("OrderServiceImpl:create Inventory record "+inventoryDetailsMap);
             return inventoryDetailsMap;
-        });
+        });*/
 
         CustomerDTO customerDTO = null;
         Map<Long, String> inventoryDetails = null;
+        customerDTO = getCustomerRecords(order);
+        inventoryDetails = getInventoryRecords(order);
+        
+        /*
         try {
-            customerDTO = customerDTOCompletableFuture.get();
-            inventoryDetails = inventoryMapDTOCompletableFuture.get();
+            customerDTO = getCustomerRecords(order);
+            inventoryDetails = getInventoryRecords(order);
         } catch (InterruptedException e) {
+            logger.error("OrderServiceImpl:create Error occured while fetching consumer and inventory details ",e);
             e.printStackTrace();
         } catch (ExecutionException e) {
+            logger.error("OrderServiceImpl:create Error occured while fetching consumer and inventory details ",e);
             e.printStackTrace();
         }
+        */
 
+        //Process Billing
 
+        processBillingRecords(order);
+        
+        //Using RabbitMQ
+        sendNotification(order, customerDTO, inventoryDetails);
+
+        //Using AWS SQS
+        sendNotificationUsingAWSSQS(order, customerDTO, inventoryDetails);
+
+        //Send Pubsub messages to Sales and packaging team
+        sendNotificationUsingPubSub(order, customerDTO, inventoryDetails);
+
+        /*
         CompletableFuture<Void> processBillingRecords = CompletableFuture.supplyAsync(()->{
+            logger.info("OrderServiceImpl:create Processing billing record "+order);
             //Process Billing
             processBillingRecords(order);
             return null;
@@ -134,6 +168,9 @@ public class OrderServiceImpl  implements OrderService {
         CustomerDTO finalCustomerDTO = customerDTO;
         Map<Long, String> finalInventoryDetails = inventoryDetails;
         CompletableFuture<Void> sendNotification = CompletableFuture.supplyAsync(()->{
+            
+            logger.info("OrderServiceImpl:create Sending notification via rabbitmq ");
+
             //Using RabbitMQ
             sendNotification(order, finalCustomerDTO, finalInventoryDetails);
             return null;
@@ -141,6 +178,9 @@ public class OrderServiceImpl  implements OrderService {
 
 
         CompletableFuture<Void> sendNotificationUsingAWSSQS = CompletableFuture.supplyAsync(()->{
+
+            logger.info("OrderServiceImpl:create Sending notification via AWS sqs ");
+
             //Using AWS SQS
             sendNotificationUsingAWSSQS(order, finalCustomerDTO, finalInventoryDetails);
             return null;
@@ -148,13 +188,21 @@ public class OrderServiceImpl  implements OrderService {
 
         CompletableFuture<Void> sendNotificationUsingPubSub = CompletableFuture.supplyAsync(()->{
 
+            logger.info("OrderServiceImpl:create Sending notification via AWS PUBSUB SNS ");
+
             //Send Pubsub messages to Sales and packaging team
             sendNotificationUsingPubSub(order, finalCustomerDTO, finalInventoryDetails);
             return null;
         });
+        */ 
+
+        logger.info("OrderServiceImpl:create Transforming order respose");
 
         //transform
         OrderTransformer.tranformOrderToOrderBO(order,orderBO);
+
+        logger.info("OrderServiceImpl:create Transformed order respose "+orderBO);
+
 
         return orderBO;
     }
@@ -213,6 +261,15 @@ public class OrderServiceImpl  implements OrderService {
             customerDTO = customerDTOResponseEntity.getBody();
         }
 
+        if(customerDTO == null) {
+             
+            customerDTO = new CustomerDTO();
+            customerDTO.setEmailId("devendra_patil26@yahoo.com");
+            customerDTO.setLastName("TestlastName");
+            customerDTO.setFirstName("TestfirstName");
+            customerDTO.setPhoneNumber("0000000000");
+        }
+
         return customerDTO;
     }
 
@@ -228,17 +285,40 @@ public class OrderServiceImpl  implements OrderService {
             ResponseEntity<InventoryDTO> customerDTOResponseEntity = inventoryServiceUtil.fetchInventoryRecords(orderDetails.getInventoryId());
             InventoryDTO inventoryDTO = null;
             if(customerDTOResponseEntity != null && customerDTOResponseEntity.getBody() != null) {
-                inventoryDTO = customerDTOResponseEntity.getBody();
+                
+                // Uncomment this when you setup inventory data and throw exception if data not found
+                //inventoryDTO = customerDTOResponseEntity.getBody();
+                //inventoryDetails.put(inventoryDTO.getInventoryId(),inventoryDTO.getInventoryName());
+                
+
+                // mock data for testing
+                inventoryDTO = new InventoryDTO();
+                inventoryDTO.setInventoryId(1L);
+                inventoryDTO.setInventoryName("TestItem");
+                inventoryDTO.setPrice(100L);
+                inventoryDTO.setQuantity(34L);
+        
                 inventoryDetails.put(inventoryDTO.getInventoryId(),inventoryDTO.getInventoryName());
+                
+                logger.info(" OrderServiceImpl:getInventoryRecords Inside service response "+inventoryDetails);
+
             }
         }
+
+        logger.info(" OrderServiceImpl:getInventoryRecords Inventory details "+inventoryDetails);
 
         return inventoryDetails;
     }
 
     private void sendNotification(Order order, CustomerDTO customerDTO, Map<Long, String> inventoryDetails) {
+        
+        logger.info("OrderServiceImpl:sendNotification sending to MQ");
+        
         //Transform NotificationDTOObject
         NotificationDTO notificationDTO = NotificationTransfomer.transformNotificationDTO(order, customerDTO, inventoryDetails);
+
+        logger.info("OrderServiceImpl:sendNotification sending object to MQ "+notificationDTO);
+
         // Async Call to NotifyMgr and EventMgr
         notificationMgrPublisher.publish(notificationDTO, AMQPKeys.EXHANGE,AMQPKeys.ROUNTING_KEY);
     }
@@ -247,6 +327,9 @@ public class OrderServiceImpl  implements OrderService {
     private void sendNotificationUsingAWSSQS(Order order, CustomerDTO customerDTO, Map<Long, String> inventoryDetails) {
         //Transform NotificationDTOObject
         NotificationDTO notificationDTO = NotificationTransfomer.transformNotificationDTO(order, customerDTO, inventoryDetails);
+        
+        logger.info("OrderServiceImpl:sendNotificationUsingAWSSQS sending to AWSSQS "+queueMessagingTemplate);
+
         queueMessagingTemplate.convertAndSend(endpoint, notificationDTO);
     }
 
@@ -254,6 +337,8 @@ public class OrderServiceImpl  implements OrderService {
 
         //Transform NotificationDTOObject
         NotificationDTO notificationDTO = NotificationTransfomer.transformNotificationDTO(order, customerDTO, inventoryDetails);
+
+        logger.info("OrderServiceImpl:sendNotificationUsingPubSub sending to AWS SNS");
 
         PubSubServiceUtil pubSubServiceUtil = new PubSubServiceUtil();
         pubSubServiceUtil.publishNotification(notificationDTO);

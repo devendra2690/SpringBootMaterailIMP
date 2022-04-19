@@ -1,0 +1,105 @@
+version: '3'
+services:
+  postgres:
+    container_name: postgresdb
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_DB=InventoryMgr
+    ports:
+      - "5432:5432"
+    volumes:
+      - $PWD/data:/var/lib/postgresql
+  redis:
+    image: redis:alpine
+    hostname: rediscache
+    ports:
+      - "6379:6379"
+  inventoryapigateway:
+    build:
+      context: ./InventoryGateway
+    ports:
+      - "9890:9890"
+  ordermanagement:
+    build:
+      context: ./OrderManagement
+    ports:
+      - "8281:8281"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/InventoryMgr
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_RABBITMQ_HOST=rabbitmq   # define name of rabbit mq container
+    depends_on:
+      - rabbitmq
+      - postgres
+    links:
+      - "redis:rediscache"
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+  customermanagment:
+    build:
+      context: ./CustomerManagement
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/InventoryMgr
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+  notificationmanger:
+    build:
+      context: ./NotificationManager
+    ports:
+      - "8581:8581"  
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq   # define name of rabbit mq container
+    depends_on:
+      - rabbitmq
+  billingmangement:
+    build:
+      context: ./BillingManagement
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/InventoryMgr
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+    ports:
+      - "8381:8381"  
+  notificationmanagerawssqs:
+    build:
+      context: ./NotificationManagerAWSSQS/NotificationManagerAWSSQS
+    ports:
+      - "8681:8681"
+  ordernotificatopnawspubsub:
+    build:
+      context: ./OrderNotificationAWSPubSub
+    ports:
+      - "8781:8781"  
+  inventorymanagement:
+    build:
+      context: ./InventoryManagement    
+    ports:
+      - "8181:8181"  
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/InventoryMgr
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+volumes:
+    postgres-volume:
+        external: false

@@ -1,6 +1,9 @@
 package com.devendrabrain.OrderManagement.util.inventory;
 
 import com.devendrabrain.OrderManagement.util.customermgr.CustomerDTO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -15,6 +18,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class InventoryServiceUtil {
+
+    private Logger logger = LoggerFactory.getLogger(InventoryServiceUtil.class);
+
 
     @Autowired
     Environment environment;
@@ -39,18 +45,28 @@ public class InventoryServiceUtil {
         RestTemplate restTemplate = new RestTemplate();
 
         try {
+            // Add URL to property file
+            // Not going through APIGateway beacuse need to add entry in GateWayConfig.java for NotificationMgr
+            // I AM LAZY :)
+            // Hostname used here should match with service name defined in docker-compose file
+
+            logger.info("InventoryServiceUtil:fetchInventoryRecords Sending request to fetch inventory ", requestEntity);
             responseEntity = restTemplate.exchange(new URI(
-                            "http://localhost:8080/InventoryMgr/" + inventoryId),
+                            "http://inventorymanagement:8181/InventoryMgr/" + inventoryId),
                     HttpMethod.GET, requestEntity, InventoryDTO.class);
         } catch (RestClientException | IllegalStateException | URISyntaxException e) {
            /* log.error("ClassName : " + this.getClass().getSimpleName() + " Exception in calling OrgMgr", e);
             throw new ApiInternalErrorException(ErrorCategory.InternalServerError.getCode(),
                     ErrorCategory.InternalServerError.getMessage(), e.getMessage() + " Exception in calling OrgMgr");*/
+                    logger.error("InventoryServiceUtil:fetchInventoryRecords Error Occured ", e); 
         } catch (Exception e) {
            /* log.error("ClassName : " + this.getClass().getSimpleName()
                     + " OrgMgr is down/Unknown exception while calling OrgMgr", e);
             throw new ApiInternalErrorException(ErrorCategory.InternalServerError.getCode(),
                     ErrorCategory.InternalServerError.getMessage(), "OrgMgr is down/Unknown exception");*/
+                    logger.error("InventoryServiceUtil:fetchInventoryRecords Error Occured ", e); 
+
+
         }
 
         return responseEntity;

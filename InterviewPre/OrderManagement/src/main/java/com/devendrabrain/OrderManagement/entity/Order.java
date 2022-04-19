@@ -1,13 +1,10 @@
 package com.devendrabrain.OrderManagement.entity;
 
-import lombok.Data;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
 @Table(name = "inventory_orders")
 public class Order {
 

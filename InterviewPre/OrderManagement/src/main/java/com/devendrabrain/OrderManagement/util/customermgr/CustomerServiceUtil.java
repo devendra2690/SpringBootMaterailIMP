@@ -1,5 +1,7 @@
 package com.devendrabrain.OrderManagement.util.customermgr;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -14,6 +16,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class CustomerServiceUtil {
+
+    private Logger logger = LoggerFactory.getLogger(CustomerServiceUtil.class);
+
 
     @Autowired
     Environment environment;
@@ -38,8 +43,14 @@ public class CustomerServiceUtil {
         RestTemplate restTemplate = new RestTemplate();
 
         try {
+            // Add this to property file
+            // Not going through APIGateway beacuse need to add entry in GateWayConfig.java for NotificationMgr
+            // I AM LAZY :)
+            // Hostname used here should match with service name defined in docker-compose file
+
+            logger.info("ConsumerServiceUtil:fetchCustomerRecords", requestEntity);
             responseEntity = restTemplate.exchange(new URI(
-                            "http://localhost:8080/CustomerMgr/" + customerId),
+                            "http://customermanagment:8080/CustomerMgr/" + customerId),
                     HttpMethod.GET, requestEntity, CustomerDTO.class);
         } catch (RestClientException | IllegalStateException | URISyntaxException e) {
            /* log.error("ClassName : " + this.getClass().getSimpleName() + " Exception in calling OrgMgr", e);
@@ -50,6 +61,7 @@ public class CustomerServiceUtil {
                     + " OrgMgr is down/Unknown exception while calling OrgMgr", e);
             throw new ApiInternalErrorException(ErrorCategory.InternalServerError.getCode(),
                     ErrorCategory.InternalServerError.getMessage(), "OrgMgr is down/Unknown exception");*/
+                    logger.error("ConsumerServiceUtil:fetchCustomerRecords Error Occured", e);
         }
 
         return responseEntity;

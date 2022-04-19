@@ -13,6 +13,9 @@ public class GateWayConfig {
     @Autowired
     LoggingFilter loggingFilter;
 
+
+      // Hostname used here should match with service name defined in docker-compose file
+
       @Bean
       public RouteLocator routeLocator (RouteLocatorBuilder routeLocatorBuilder) {
 
@@ -20,30 +23,35 @@ public class GateWayConfig {
                   route(predicateSpec -> predicateSpec
                           .path("/BillingMgr/**")
                           .filters(gatewayFilterSpec -> gatewayFilterSpec.filter(loggingFilter)
-                          ).uri("http://localhost:8381/BillingMgr/")
+                          ).uri("http://billingmangement:8381/BillingMgr/")
                   ).
                   route(predicateSpec -> predicateSpec
                           .path("/CustomerMgr/circuitBreaker")
                           .filters(gatewayFilterSpec ->
                                   gatewayFilterSpec.circuitBreaker(
                                           config -> config.setFallbackUri("/fallback")))
-                          .uri("http://localhost:8081/CustomerMgr/")
+                          .uri("http://customermanagment:8081/CustomerMgr/")
                   ).
                   route(predicateSpec -> predicateSpec
                           .path("/CustomerMgr/**")
                           .filters(gatewayFilterSpec -> gatewayFilterSpec.filter(loggingFilter)
-                          ).uri("http://localhost:8081/CustomerMgr/")
+                          ).uri("http://customermanagment:8081/CustomerMgr/")
                   ).
                   route(predicateSpec -> predicateSpec
                           .path("/OrderMgr/**")
                           .filters(gatewayFilterSpec -> gatewayFilterSpec.filter(loggingFilter)
-                          ).uri("http://localhost:8281/OrderMgr/")
+                          ).uri("http://ordermanagement:8281/OrderMgr/")
                   ).
                   route(predicateSpec -> predicateSpec
                           .path("/InventoryMgr/**")
                           .filters(gatewayFilterSpec -> gatewayFilterSpec.filter(loggingFilter)
-                          ).uri("http://localhost:8181/InventoryMgr/")
+                          ).uri("http://inventorymanagement:8181/InventoryMgr/")
                   ).
+                  route(predicateSpec -> predicateSpec
+                        .path("/AWSSNSMgr/**")
+                        .filters(gatewayFilterSpec -> gatewayFilterSpec.filter(loggingFilter)
+                        ).uri("http://ordernotificatopnawspubsub:8781/AWSSNSMgr/")
+                 ).
                   build();
       }
 

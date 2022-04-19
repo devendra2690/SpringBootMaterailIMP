@@ -5,6 +5,10 @@ import com.devendrabrain.OrderManagement.constant.ApiName;
 import com.devendrabrain.OrderManagement.dto.OrderDTO;
 import com.devendrabrain.OrderManagement.service.OrderService;
 import com.devendrabrain.OrderManagement.transformer.OrderTransformer;
+
+import org.apache.logging.log4j.spi.LoggerContextFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +18,8 @@ import java.util.*;
 @RestController
 @RequestMapping("/OrderMgr")
 public class OrderController {
+
+    private Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
     OrderService orderService;
@@ -38,12 +44,12 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public OrderDTO fetchById(@PathVariable("/id") Long orderId) {
+    public OrderDTO fetchById(@PathVariable("/id") Integer orderId) {
 
         MDC.put("X-RS-ApiName", ApiName.ORDER_MGR_FETCH_BY_ID.name());
 
         // Fetch call
-        OrderBO orderBO = orderService.fetchById(orderId);
+        OrderBO orderBO = orderService.fetchById(Long.valueOf(orderId));
 
         // Transform
         OrderDTO orderDTO = OrderTransformer.tranformOrderBOToOrderDTO(orderBO, new OrderDTO());
@@ -60,11 +66,13 @@ public class OrderController {
         OrderBO orderBO = OrderTransformer.tranformOrderDTOToOrderBO(orderDTO, new OrderBO());
         orderBO.setOrderDate(new Date());
 
-
+        logger.info("OrderController:create Order create request receieved "+orderBO);
         orderBO = orderService.create(orderBO);
+        logger.info("OrderController:create Order Created request receieved "+orderBO);
 
         //Transform
         orderDTO = OrderTransformer.tranformOrderBOToOrderDTO(orderBO,orderDTO);
+        logger.info("OrderController:create Preparing response object "+orderDTO);
 
         return orderDTO;
     }
