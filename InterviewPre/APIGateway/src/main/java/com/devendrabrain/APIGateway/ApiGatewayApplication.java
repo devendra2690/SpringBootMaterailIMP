@@ -7,6 +7,7 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 // Changed comment
 
 
+// This is Zull config
 @SpringBootApplication
 @EnableZuulProxy
 public class ApiGatewayApplication {

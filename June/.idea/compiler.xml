@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="OrgMgr" />
+        <module name="CommMgr" />
+        <module name="SpringCloudServer" />
+        <module name="EventMgr" />
+        <module name="SpringAPIGateway" />
+        <module name="StudentMgr" />
+        <module name="ResultMgr" />
+        <module name="SpringEurekaServer" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CommMgr" options="-parameters" />
+      <module name="EventMgr" options="-parameters" />
+      <module name="OrgMgr" options="-parameters" />
+      <module name="ResultMgr" options="-parameters" />
+      <module name="SpringAPIGateway" options="-parameters" />
+      <module name="SpringCloudServer" options="-parameters" />
+      <module name="SpringEurekaServer" options="-parameters" />
+      <module name="StudentMgr" options="-parameters" />
+    </option>
+  </component>
+</project>
